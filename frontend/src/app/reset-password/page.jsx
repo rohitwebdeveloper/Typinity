@@ -104,8 +104,8 @@ export default function ResetPassword() {
 
   return (
     <div className="min-h-screen bg-[#0f172a] flex items-center justify-center px-4">
-      <div className="bg-[#1e293b] p-8 rounded-2xl shadow-xl w-full max-w-md">
-        <h2 className="text-2xl font-bold text-white mb-6 text-center">
+      <div className="bg-[#1e293b] p-4 sm:p-8 rounded-2xl shadow-xl w-full max-w-md">
+        <h2 className="text-xl sm:text-2xl font-semibold sm:font-bold text-white mb-6 text-center">
           Reset Password
         </h2>
 
@@ -125,7 +125,7 @@ export default function ResetPassword() {
             <button
               onClick={handleSendOtp}
               disabled={loading}
-              className="w-full mt-4 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 rounded-lg transition"
+              className="w-full mt-4 bg-cyan-500 hover:bg-cyan-600 text-white  sm:font-semibold py-2 rounded-lg transition"
             >
             {loading ? '...Processing' : 'Send OTP'}  
             </button>

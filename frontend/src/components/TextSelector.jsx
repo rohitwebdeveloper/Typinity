@@ -8,12 +8,11 @@ const TextSelector = ({ randomnum, selectedType, setSelectedType, settext }) => 
     const [customText, setCustomText] = useState('');
     const [textToShow, setTextToShow] = useState('');
     const [custominputActive, setcustominputActive] = useState(false)
-    const [selectedArray, setselectedArray] = useState(data.words[0])
+    const [selectedArray, setselectedArray] = useState(data[selectedType][randomnum])
     // let selectedArray = data.words[0];
 
     const handleSelect = (item) => {
         setSelectedType(item);
-
         switch (item) {
             case 'words':
                 setselectedArray(data.words[randomnum]);
@@ -49,17 +48,16 @@ const TextSelector = ({ randomnum, selectedType, setSelectedType, settext }) => 
     }
 
     const handlesetWord = (e) => {
-        console.log(selectedArray)
         setWordCount(Number(e.target.value))
-        const words = selectedArray?.split(' ').slice(0, e.target.value);
+        const words = data[selectedType][randomnum]?.split(' ').slice(0, e.target.value);
         setTextToShow(words.join(' '));
         settext(words.join(' '));
     }
 
     return (
-        <div className=" bg-black text-white flex flex-col items-center p-4 gap-6 font-sans">
-            <div className='flex justify-between gap-4'>
-                <div className="bg-cyan-500 text-black font-semibold rounded-xl w-full max-w-3xl  flex items-center justify-evenly  shadow-lg">
+        <div className=" bg-black text-white flex flex-col items-center p-4 gap-6 my-3 sm:my-0 ">
+            <div className='flex justify-between flex-wrap sm:flex-nowrap gap-4'>
+                <div className="bg-cyan-500 text-black font-semibold rounded-md py-1 sm:rounded-lg w-full  flex items-center justify-evenly  shadow-lg">
                     {['words', 'punctuations', 'mixed'].map((item) => (
                         <span
                             key={item}
@@ -77,11 +75,11 @@ const TextSelector = ({ randomnum, selectedType, setSelectedType, settext }) => 
                     </span>
                 </div>
 
-                <div className="flex gap-4 items-center w-full max-w-3xl">
+                <div className="flex gap-4 items-center w-full max-w-48">
                     <label className="text-cyan-300 text-sm font-medium">Words:</label>
                     <input
                         type="number"
-                        className="bg-gray-800 text-white border text-sm border-cyan-500 px-3 py-2 rounded-md w-24 outline-none"
+                        className="bg-gray-800 text-white border text-sm border-cyan-500 px-3 py-[2px] sm:py-2 rounded-md w-24 outline-none"
                         value={wordCount}
                         onChange={handlesetWord}
                     />
@@ -89,16 +87,16 @@ const TextSelector = ({ randomnum, selectedType, setSelectedType, settext }) => 
             </div>
 
             {custominputActive && (
-                <div className="flex gap-4 items-center w-full max-w-3xl">
+                <div className="flex flex-col sm:flex-row gap-4 items-center w-full max-w-3xl">
                     <input
                         type="text"
                         placeholder="Enter custom text"
-                        className="flex-grow bg-gray-800 text-white border text-sm border-cyan-500 px-4 py-2 rounded-md outline-none"
+                        className="flex-grow bg-gray-800 text-white border text-sm w-full border-cyan-500 px-4 py-[6px] sm:py-2 rounded-md outline-none"
                         value={customText}
                         onChange={(e) => setCustomText(e.target.value)}
                     />
                     <button
-                        className="bg-cyan-600 text-sm hover:bg-cyan-700 text-white px-4 py-2 rounded-md transition"
+                        className="bg-cyan-600 text-sm hover:bg-cyan-700 min-w-fit text-white px-4 py-2 rounded-md transition"
                         onClick={handleCustomText}
                     >
                         Set Custom

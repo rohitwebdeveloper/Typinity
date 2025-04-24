@@ -32,20 +32,20 @@ const Setting = () => {
   
 
     return (
-        <div className="mt-10 bg-[#1e293b] p-6 rounded-2xl shadow-xl">
-        <h2 className="text-xl font-semibold mb-4 text-white">Settings</h2>
+        <div className="mt-6 sm:mt-10 bg-[#1e293b] p-3 sm:p-5 md:p-6 rounded-2xl shadow-xl">
+        <h2 className="text-lg sm:text-xl font-semibold mb-4 text-white">Settings</h2>
         <p className="text-gray-400 mb-4">Log out, and delete your account.</p>
       
         <div className="flex flex-col w-fit gap-3">
           {/* <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 transition-colors rounded-lg  text-white">
             Change Password
-          </button> */}
+          </button> */}   
       
-          <button onClick={handleLogout} className="px-4 py-2 bg-gray-600 hover:bg-gray-700 transition-colors rounded-lg  text-white">
+          <button onClick={handleLogout} className="px-2 sm:px-4 py-1 sm:py-2 bg-gray-600 hover:bg-gray-700 transition-colors rounded-lg  text-white">
             Log Out
           </button>
       
-          <button onClick={handleDeleteAccount} className="px-4 py-2 bg-red-600 hover:bg-red-700 transition-colors rounded-lg  text-white">
+          <button onClick={handleDeleteAccount} className="px-2 sm:px-4 py-1 sm:py-2 bg-red-600 hover:bg-red-700 transition-colors rounded-lg  text-white">
             Delete Account
           </button>
         </div>

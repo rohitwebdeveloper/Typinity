@@ -7,6 +7,7 @@ import axiosInstance from '@/utils/AxiosInstance'
 import { setAuthUser } from '@/lib/reducers/authSlice'
 
 
+
 const AuthProvider = () => {
 
     const dispatch = useDispatch()
@@ -21,6 +22,7 @@ const AuthProvider = () => {
             console.log(response)
             if (response.status === 200 && response.data.success == true) {
                 dispatch(setAuthUser(true))
+                sessionStorage.setItem('userdetails', JSON.stringify(response.data.user));
             } else {
                 dispatch(setAuthUser(false))
             }

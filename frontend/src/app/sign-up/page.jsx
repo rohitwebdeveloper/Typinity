@@ -22,6 +22,7 @@ const SignUp = () => {
     email: '',
     password: ''
   })
+  const [showhide, setshowhide] = useState(true)
 
 
   const handleOnchange = (event) => {
@@ -49,7 +50,7 @@ const SignUp = () => {
 
     try {
       setloading(true)
-      const response = await axiosInstance.post('/api/auth/sign-up', formData)
+      const response = await axiosInstance.post('/api/auth/sign-up', formData, { withCredentials: true })
       console.log(response)
       if (response.status === 201) {
         toastSuccess('Sign-Up Successful')
@@ -67,8 +68,8 @@ const SignUp = () => {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4">
-      <div className="bg-black/30 backdrop-blur-lg border border-white/10 rounded-2xl p-8 w-full max-w-md shadow-2xl">
-        <h2 className="text-3xl font-bold text-white text-center mb-6">
+      <div className="bg-black/30 backdrop-blur-lg border border-white/10 rounded-2xl p-4 sm:p-8 w-full max-w-md shadow-2xl">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold sm:font-bold text-white text-center mb-6">
           Create Your Account 🚀
         </h2>
 
@@ -99,22 +100,25 @@ const SignUp = () => {
 
           <div>
             <label className="block text-sm text-white mb-1">Password</label>
-            <input
-              type="password"
-              name='password'
-              value={formData.password}
-              onChange={handleOnchange}
-              placeholder=""
-              className="w-full px-4 py-2 bg-white/5 text-white border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
-            />
+            <div className="w-full flex items-center px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400">
+              <input
+                type={showhide ? 'password' : 'text'}
+                name='password'
+                value={formData.password}
+                onChange={handleOnchange}
+                placeholder=""
+                className="w-full bg-transparent text-white outline-none"
+              />
+              <img src={showhide ? '/hide.png' : '/view.png'} alt="show/hide" onClick={() => setshowhide(!showhide)} className='filter invert h-7' />
+            </div>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-2 rounded-xl transition duration-300"
+            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white sm:font-semibold py-2 rounded-xl transition duration-300"
           >
-          {loading ? '...Wait a moment' : 'Sign Up'}  
+            {loading ? '...Wait a moment' : 'Sign Up'}
           </button>
         </form>
 

@@ -16,20 +16,18 @@ import Error from "@/components/Error";
 const Account = () => {
 
   const router = useRouter();
-  const isAuthorised = useSelector((state) => state.auth.value)
   const [progressData, setprogressData] = useState([])
   const [loading, setloading] = useState(true)
   const [isError, setisError] = useState(false)
   const [range, setrange] = useState(0)
+  const [userdetails, setuserdetails] = useState('')
 
   useEffect(() => {
     ; (async () => {
-      if (!isAuthorised) {
-        router.push('/sign-in')
-        toastError('You need to login first')
-        return
-      }
+ 
       try {
+        setuserdetails(JSON.parse(sessionStorage.getItem('userdetails')))
+        console.log('UserDetails', userdetails)
         let range = 0
         setloading(true)
         setisError(false)
@@ -37,28 +35,35 @@ const Account = () => {
         console.log(response)
         if (response.status === 200) {
           setprogressData(response.data.progress)
-          setloading(false)
+
         }
       } catch (error) {
-        toastError(error?.response?.data?.message || 'Something went wrong!');
+        if (error?.response?.status === 401) {
+          toastError('You need to login first');
+          router.push('/sign-in');
+        } else {
+          toastError(error?.response?.data?.message || 'Something went wrong!');
+          setisError(true);
+        }
+      } finally {
         setloading(false)
-        setisError(true)
       }
     })()
   }, [])
 
+  
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white py-10 px-6 sm:px-12">
-      <button onClick={()=> router.push('/')} className="bg-cyan-400 rounded-full text-black px-3 py-1 hover:border-white hover:border"> ◀ Home</button>
+    <div className="min-h-screen bg-[#0f172a] text-white py-10 px-4 sm:px-6 md:px-10">
+      <button onClick={() => router.push('/')} className="bg-cyan-400 rounded-full text-black px-3 text-sm sm:text-base py-1 hover:border-white hover:border"> ◀ Home</button>
       {loading && (<Loader />)}
       {isError && (<Error />)}
       {!loading && !isError && (
         <div className="max-w-5xl mx-auto">
-          <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-cyan-400">My Account</h1>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold sm:font-bold text-center md:text-left mt-3 xl:mt-0 mb-6 text-cyan-400">My Account</h1>
 
-          <div className="grid sm:grid-cols-2 gap-8">
+          <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
             {/* User Info Card */}
-            <UserInfoCard user={progressData?.[0]?.user} />
+            <UserInfoCard user={progressData?.[0]?.user} userdetails={userdetails} />
 
             {/* Latest Stats */}
             <Stats progressData={progressData} />

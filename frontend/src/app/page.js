@@ -30,10 +30,11 @@ export default function Home() {
   const [feedbackText, setfeedbackText] = useState('')
   const feedbackintervalRef = useRef(null)
   const [selectedType, setSelectedType] = useState('words');
+  const [randomnum, setrandomnum] = useState(0)
   // const [feedbackResponse, setfeedbackResponse] = useState('')
   let correctCharaters;
   let errorCharactors;
-  let randomnum = 0;
+
 
   const random = () => Math.floor(Math.random() * 4);
 
@@ -151,8 +152,10 @@ export default function Home() {
 
 
   const refreshClick = () => {
-   randomnum = random()
-   settext(data[selectedType][randomnum])
+    let rannum = random();
+    // console.log('refresh random :', rannum)
+    setrandomnum(rannum)
+    settext(data[selectedType][rannum])
     setInput("")
     setAccuracy(0)
     setIsTyping(false)
@@ -172,11 +175,11 @@ export default function Home() {
 
 
   return (
-    <div className="flex flex-col items-center justify-center  bg-black px-6 text-white">
-  
+    <div className="flex flex-col items-center justify-center  bg-black px-3 sm:px-6 text-white">
+
       {!input.length || isTyping ? (
         <div className="w-full flex flex-col items-center">
-          <h1 className="text-3xl font-semibold text-cyan-400 mb-4">Typinity - Where speed meets precision</h1>
+          <h1 className="text-xl sm:text-2xl md:text-3xl mt-10 sm:mt-8 font-semibold text-cyan-400 mb-2 sm:mb-4">Typinity - Speed meets precision</h1>
 
           {/* Text selector to change text to type */}
           <TextSelector randomnum={randomnum} selectedType={selectedType} setSelectedType={setSelectedType} settext={settext} refreshClick={refreshClick} />
@@ -198,21 +201,21 @@ export default function Home() {
           </div>
 
           {/* Button to get feedback from ai  */}
-          {!isFeedback && <button onClick={getAiFeedback} className="bg-indigo-500 hover:bg-indigo-600 transition-all duration-200 text-white font-medium px-6 mt-8 py-3 rounded-xl shadow-md hover:shadow-lg">
+          {!isFeedback && <button onClick={getAiFeedback} className="bg-indigo-500 hover:bg-indigo-600 transition-all duration-200 text-white sm:font-medium px-4 sm:px-6 mt-8 py-2 sm:py-3 rounded-xl shadow-md hover:shadow-lg">
             🔍 Get AI Feedback
           </button>}
 
           {/* Feedback box */}
           {isFeedback && <Feedback feedbackText={feedbackText} />}
-          <button className="hover:underline text-lg hover:text-cyan-400 mt-5 underline" onClick={refreshClick} >Restart </button>
+          <button className="hover:underline text-lg hover:text-cyan-400 mt-3 sm:mt-5 underline" onClick={refreshClick} >Restart </button>
           {/* Save and Sign-in Button */}
-          <div className="my-8 flex gap-8">
+          <div className="my-5 md:my-8 flex gap-8">
             {auth ? (
-              <button onClick={saveProgress} className="px-3 py-1 rounded-md text-lg text-black font-semibold hover:bg-cyan-600  bg-cyan-500">Save Progress</button>
+              <button onClick={saveProgress} className="px-3 py-1 rounded-md text-base sm:text-lg text-black font-semibold hover:bg-cyan-600  bg-cyan-500">Save Progress</button>
             ) : (
-              <div onClick={() => router.push('/sign-in')} className="font-semibold underline text-lg hover:text-cyan-600">Sign-in to save progress.</div>
+              <div onClick={() => router.push('/sign-in')} className="font-semibold underline text-base sm:text-lg hover:text-cyan-600">Sign-in to save progress.</div>
             )}
-              
+
           </div>
         </>
       )}

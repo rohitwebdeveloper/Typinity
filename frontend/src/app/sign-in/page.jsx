@@ -19,6 +19,7 @@ export default function SignIn() {
     email: '',
     password: ''
   })
+  const [showhide, setshowhide] = useState(true)
 
 
   const handleOnchange = (event) => {
@@ -46,7 +47,7 @@ export default function SignIn() {
 
     try {
       setloading(true)
-      const response = await axiosInstance.post('/api/auth/sign-in', formData)
+      const response = await axiosInstance.post('/api/auth/sign-in', formData, { withCredentials: true })
       console.log(response)
       if (response.status === 200) {
         toastSuccess('Sign-In Successful')
@@ -62,9 +63,9 @@ export default function SignIn() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4">
-      <div className="bg-black/30 backdrop-blur-lg border border-white/10 rounded-2xl p-8 w-full max-w-md shadow-2xl">
-        <h2 className="text-3xl font-bold text-white text-center mb-6">
+    <div className="min-h-screen bg-black flex items-center justify-center  px-4">
+      <div className="bg-black/30 backdrop-blur-lg border border-white/10 rounded-2xl p-4 sm:p-8 w-full max-w-sm sm:max-w-md shadow-2xl">
+        <h2 className=" text-xl  sm:text-2xl md:text-3xl font-semibold sm:font-bold text-white text-center mb-6">
           Welcome Back 👋
         </h2>
 
@@ -83,28 +84,31 @@ export default function SignIn() {
 
           <div>
             <label className="block text-sm text-white mb-1">Password</label>
-            <input
-              type="password"
-              name='password'
-              onChange={handleOnchange}
-              value={formData.password}
-              placeholder="••••••••"
-              className="w-full px-4 py-2 bg-white/5 text-white border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400"
-            />
+            <div className="w-full flex items-center px-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400">
+              <input
+                type={showhide ? 'password' : 'text'}
+                name='password'
+                onChange={handleOnchange}
+                value={formData.password}
+                placeholder="••••••••"
+                className="w-full bg-transparent text-white outline-none"
+              />
+              <img src={showhide ? '/hide.png' : '/view.png'} alt="show/hide" onClick={() => setshowhide(!showhide)} className='filter invert h-7' />
+            </div>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-semibold py-2 rounded-xl transition duration-300"
+            className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white sm:font-semibold py-2 rounded-xl transition duration-300"
           >
-           {loading ? '...Just a moment' : 'Sign In'}
+            {loading ? '...Just a moment' : 'Sign In'}
           </button>
         </form>
 
         <p className="text-sm text-center mt-6">
           <Link href="/reset-password" className="text-cyan-400 hover:underline ml-1">
-         Forgot Password ?
+            Forgot Password ?
           </Link>
         </p>
         <p className="text-sm text-white text-center mt-6">
