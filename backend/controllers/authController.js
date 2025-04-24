@@ -27,8 +27,8 @@ const userSignUp = async (req, res) => {
     const token = await generateToken(newUser.email, newUser._id)
     res.cookie('typinityToken', token, {
         httpOnly: true,
-        sameSite: 'Lax',
-        secure: false,
+        secure: true,
+        sameSite: 'none',
         maxAge: 86400000,
         // path: '/',
     });
@@ -51,8 +51,8 @@ const userSignIn = async (req, res) => {
         let token = await generateToken(user.email, user._id)
         res.cookie('typinityToken', token, {
             httpOnly: true,
-            sameSite: 'Lax',
-            secure: false,
+            secure: true,
+            sameSite: 'none',
             maxAge: 86400000,
         });
         return res.status(200).json({ success: true, message: 'Sign-In Successful' })
