@@ -59,7 +59,7 @@ Typinity is an interactive typing practice application designed to help users im
 * **Analytics:** View your typing stats and progress.
 
 ## Screenshots
-![Alt text]([https://raw.githubusercontent.com/username/repo/branch/path/to/image.png](https://github.com/rohitwebdeveloper/Typinity/blob/main/Typinity%20_%20Speed%20meets%20precision%20-%20Google%20Chrome%205_14_2025%208_37_30%20PM.png?raw=true))
+![Alt text](https://github.com/rohitwebdeveloper/Typinity/blob/main/Typinity%20_%20Speed%20meets%20precision%20-%20Google%20Chrome%205_14_2025%208_37_30%20PM.png?raw=true)
 
 
 ## Contributing
