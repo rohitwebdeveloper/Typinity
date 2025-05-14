@@ -11,8 +11,10 @@ import { toastSuccess, toastError } from "@/utils/toast";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import data from "./data/data";
+import WelcomePage from "@/components/WelcomePage";
 
 export default function Home() {
+  const [isWelcomeactive, setisWelcomeactive] = useState(true)
   const [text, settext] = useState(data.words[0]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -173,51 +175,56 @@ export default function Home() {
     errorCharactors = 0
   }
 
+  const handleGetStarted = () => {
+   setisWelcomeactive(false)
+  }
 
   return (
     <div className="flex flex-col items-center justify-center  bg-black px-3 sm:px-6 text-white">
-
-      {!input.length || isTyping ? (
-        <div className="w-full flex flex-col items-center">
-          <h1 className="text-xl sm:text-2xl md:text-3xl mt-10 sm:mt-8 font-semibold text-cyan-400 mb-2 sm:mb-4">Typinity - Speed meets precision</h1>
-
-          {/* Text selector to change text to type */}
-          <TextSelector randomnum={randomnum} selectedType={selectedType} setSelectedType={setSelectedType} settext={settext} refreshClick={refreshClick} />
-
-          {/* Typing Box with text area */}
-          <TypingBox text={text} handleChange={handleChange} input={input} />
-          <button className="hover:underline" onClick={refreshClick} >Refresh </button>
-        </div>
-      ) : (
-        <>
+      {isWelcomeactive ? (
+        <WelcomePage handleGetStarted={handleGetStarted}/>) : (
+        !input.length || isTyping ? (
           <div className="w-full flex flex-col items-center">
+            <h1 className="text-xl sm:text-2xl md:text-3xl mt-10 sm:mt-8 font-semibold text-cyan-400 mb-2 sm:mb-4">Typinity - Speed meets precision</h1>
 
-            {/* Typing Result Information Bar */}
-            <ResultInfoBar wpm={wpm} consistency={consistency} timeCounterRef={timeCounterRef} accuracy={accuracy} input={input} />
+            {/* Text selector to change text to type */}
+            <TextSelector randomnum={randomnum} selectedType={selectedType} setSelectedType={setSelectedType} settext={settext} refreshClick={refreshClick} />
 
-            {/* Typing result Graph */}
-            <Graph chartData={chartData} wpm={wpm} />
-
+            {/* Typing Box with text area */}
+            <TypingBox text={text} handleChange={handleChange} input={input} />
+            <button className="hover:underline" onClick={refreshClick} >Refresh </button>
           </div>
+        ) : (
+          <>
+            <div className="w-full flex flex-col items-center">
 
-          {/* Button to get feedback from ai  */}
-          {!isFeedback && <button onClick={getAiFeedback} className="bg-indigo-500 hover:bg-indigo-600 transition-all duration-200 text-white sm:font-medium px-4 sm:px-6 mt-8 py-2 sm:py-3 rounded-xl shadow-md hover:shadow-lg">
-            🔍 Get AI Feedback
-          </button>}
+              {/* Typing Result Information Bar */}
+              <ResultInfoBar wpm={wpm} consistency={consistency} timeCounterRef={timeCounterRef} accuracy={accuracy} input={input} />
 
-          {/* Feedback box */}
-          {isFeedback && <Feedback feedbackText={feedbackText} />}
-          <button className="hover:underline text-lg hover:text-cyan-400 mt-3 sm:mt-5 underline" onClick={refreshClick} >Restart </button>
-          {/* Save and Sign-in Button */}
-          <div className="my-5 md:my-8 flex gap-8">
-            {auth ? (
-              <button onClick={saveProgress} className="px-3 py-1 rounded-md text-base sm:text-lg text-black font-semibold hover:bg-cyan-600  bg-cyan-500">Save Progress</button>
-            ) : (
-              <div onClick={() => router.push('/sign-in')} className="font-semibold underline text-base sm:text-lg hover:text-cyan-600">Sign-in to save progress.</div>
-            )}
+              {/* Typing result Graph */}
+              <Graph chartData={chartData} wpm={wpm} />
 
-          </div>
-        </>
+            </div>
+
+            {/* Button to get feedback from ai  */}
+            {!isFeedback && <button onClick={getAiFeedback} className="bg-indigo-500 hover:bg-indigo-600 transition-all duration-200 text-white sm:font-medium px-4 sm:px-6 mt-8 py-2 sm:py-3 rounded-xl shadow-md hover:shadow-lg">
+              🔍 Get AI Feedback
+            </button>}
+
+            {/* Feedback box */}
+            {isFeedback && <Feedback feedbackText={feedbackText} />}
+            <button className="hover:underline text-lg hover:text-cyan-400 mt-3 sm:mt-5 underline" onClick={refreshClick} >Restart </button>
+            {/* Save and Sign-in Button */}
+            <div className="my-5 md:my-8 flex gap-8">
+              {auth ? (
+                <button onClick={saveProgress} className="px-3 py-1 rounded-md text-base sm:text-lg text-black font-semibold hover:bg-cyan-600  bg-cyan-500">Save Progress</button>
+              ) : (
+                <div onClick={() => router.push('/sign-in')} className="font-semibold underline text-base sm:text-lg hover:text-cyan-600">Sign-in to save progress.</div>
+              )}
+
+            </div>
+          </>
+        )
       )}
     </div>
   );
