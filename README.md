@@ -54,7 +54,7 @@ Typinity is an interactive typing practice application designed to help users im
 * **Test User:**
 
   * Email: [testuser1@gmail.com](mailto:testuser1@gmail.com)
-  * Password: Textuser1\@123
+  * Password: Testuser1\@123
 * **Typing Practice:** Choose a mode, start typing, and get instant feedback.
 * **Analytics:** View your typing stats and progress.
 
