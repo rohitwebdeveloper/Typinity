@@ -59,6 +59,8 @@ Typinity is an interactive typing practice application designed to help users im
 * **Analytics:** View your typing stats and progress.
 
 ## Screenshots
+![Alt text](https://raw.githubusercontent.com/username/repo/branch/path/to/image.png)
+
 
 ## Contributing
 
